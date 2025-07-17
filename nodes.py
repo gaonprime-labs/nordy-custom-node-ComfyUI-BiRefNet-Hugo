@@ -7,7 +7,9 @@ import torch.nn.functional as F
 import comfy.model_management as mm
 import os
 
-torch.set_float32_matmul_precision(["high", "highest"][0])
+torch.set_float32_matmul_precision("highest")      # 행렬곱 TF32 차단
+torch.backends.cuda.matmul.allow_tf32 = False      # 추가 안전장치
+torch.backends.cudnn.allow_tf32  = False           # 컨볼루션 TF32도 차단
 
 transform_image = transforms.Compose(
     [
